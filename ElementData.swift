@@ -8,14 +8,14 @@
 
 import Foundation
 
-protocol ElementDataProtocol {
+protocol ElementDataProtocol: Equatable{
     var level: Int { get set }
     var position: Int {get set}
     var data: String { get set }
 }
 
-class ElementData: ElementDataProtocol, Equatable{
-    
+class ElementData: ElementDataProtocol{
+
     static func == (lhs: ElementData, rhs: ElementData) -> Bool {
         return lhs.data == rhs.data &&
         lhs.level == rhs.level &&
@@ -30,5 +30,15 @@ class ElementData: ElementDataProtocol, Equatable{
         self.position = position
         self.level = level
         self.data = data
+    }
+    
+    //Mark: Удаление дублирущих родительских Элементов
+    class func foundSubElement (subString: String, data: [ElementData]) -> ElementData?{
+        for d in data{
+            if d.data == subString{
+                return d
+            }
+        }
+        return nil
     }
 }
